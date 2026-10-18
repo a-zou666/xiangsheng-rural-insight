@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>乡声 · 青溪村文化导览</title>
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <header class="app-head">
+    <div class="brand">
+      <div class="mark">声</div>
+      <div>
+        <h1>乡声</h1>
+        <p class="sub">青溪村 · 竹编技艺与古村文化 · AI 导览</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <span id="llmBadge" class="prov-badge">检索式导览</span>
+      <span class="prov-badge" title="全部资料为团队整理的示例内容，标注来源与审核状态，待实地核验">示例内容 · 待核验</span>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <section class="stage">
+      <!-- 发现 / 选择点位 -->
+      <div class="pane map-card">
+        <div class="pane-head">
+          <h2>选择导览点位</h2>
+          <p>点击地图标记或下方列表，开始一段讲解</p>
+        </div>
+        <div class="pane-body">
+          <div class="map-frame">
+            <svg id="guideMap" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" role="img" aria-label="青溪村导览点位示意图"></svg>
+          </div>
+          <p class="map-note">示意坐标，用于呈现点位先后顺序与路线走向，非真实地理位置。</p>
+          <ul id="stopList" class="stop-list"></ul>
+        </div>
+      </div>
+
+      <!-- 讲解 + 提问 -->
+      <div class="pane" id="stopPane">
+        <div class="pane-body">
+          <div class="stop-title">
+            <h3 id="stopName">加载中…</h3>
+            <span id="stopTag" class="tag"></span>
+          </div>
+          <p id="stopIntro" class="stop-intro"></p>
+
+          <div id="styleTabs" class="style-tabs" role="tablist" aria-label="讲解版本"></div>
+          <p id="guideText" class="guide-text"></p>
+          <div class="guide-actions">
+            <button id="playBtn" class="btn">▶ 收听讲解</button>
+            <button id="stopBtn" class="btn ghost">■ 停止</button>
+          </div>
+          <p id="aiNote" class="ai-note"></p>
+          <details class="orig-box">
+            <summary>对照原始资料（权威事实以此为准）</summary>
+            <p id="origText" class="orig-text"></p>
+            <div id="guideCite" class="cite-mini"></div>
+          </details>
+
+          <div class="ask">
+            <h4>向导览提问</h4>
+            <div class="ask-row">
+              <input id="q" type="text" autocomplete="off"
+                     placeholder="例如：竹编是怎么做出来的？有哪些工序？" />
+              <button id="askBtn" class="btn">提问</button>
+            </div>
+            <div id="askChips" class="chips"></div>
+            <label class="llm-row" title="默认走确定性检索组装；配置外部模型后可做接地改写">
+              <input type="checkbox" id="useLlm" /> AI 接地改写（需显式配置外部模型，默认关闭）
+            </label>
+            <div id="answerBox" class="answer" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="secondary">
+      <details class="fold">
+        <summary>资料来源与人工审核</summary>
+        <div class="fold-body">
+          <p id="kbDisclosure" class="disclosure-text"></p>
+          <div id="kbStats" class="stat-chips"></div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>资料条目</th><th>来源类型</th><th>审核</th><th>审核人 / 备注</th><th>版本</th></tr></thead>
+              <tbody id="kbTableBody"></tbody>
+            </table>
+          </div>
+          <details style="margin-top:10px;">
+            <summary style="cursor:pointer;font-size:12.5px;color:var(--muted);">版本记录</summary>
+            <ul id="versions" class="vers"></ul>
+          </details>
+        </div>
+      </details>
+
+      <details class="fold">
+        <summary>可复现评估（示例问题集，非真实用户测试）</summary>
+        <div class="fold-body">
+          <p id="evalNote" class="disclosure-text"></p>
+          <div id="evalCards" class="eval-cards"></div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th>结果</th><th>预期</th><th>作答</th><th>Top分</th><th>覆盖率</th><th>问题</th></tr></thead>
+              <tbody id="evalRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </details>
+    </section>
+  </div>
+
+  <footer class="app-foot">
+    <p>乡声 · 乡村文化 AI 导览原型。青溪村为示例村落设定，资料由团队按公开资料风格整理编写并标注来源与人工审核状态，均为示例、待实地核验，不作为真实历史事实引用；尚未经真实用户或当地场馆验证。</p>
+    <p>默认离线运行：回答基于本地资料的确定性检索并给出引用，资料不足时明确说明；语音由浏览器 Web Speech API 本地合成。</p>
+  </footer>
+
+  <script src="guide.js"></script>
+</body>
+</html>

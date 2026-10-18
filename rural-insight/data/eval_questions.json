@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "note": "青溪村竹编主题 AI 导览评估问题集（示例）。每题标注预期行为：answer=应基于资料作答并给出引用；refuse=资料不足应拒答。expect_sources 为预期命中的资料条目 id（命中其一即视为引用正确）。本集合用于计算引用命中率、拒答正确率与风格覆盖，不代表真实用户测试。",
+    "version": "1.0.0",
+    "updated": "2026-10-10"
+  },
+  "questions": [
+    {"q": "青溪村有什么特色？", "expect": "answer", "expect_sources": ["qx-overview"], "keywords": ["竹编"]},
+    {"q": "青溪竹编的历史是怎样的？", "expect": "answer", "expect_sources": ["qx-bamboo-origin"], "keywords": ["竹编"]},
+    {"q": "竹编是怎么做出来的？有哪些工序？", "expect": "answer", "expect_sources": ["qx-bamboo-craft"], "keywords": ["选竹", "编织"]},
+    {"q": "竹编有哪些常见纹样？", "expect": "answer", "expect_sources": ["qx-bamboo-patterns"], "keywords": ["人字纹"]},
+    {"q": "人字纹是什么意思？", "expect": "answer", "expect_sources": ["qx-bamboo-patterns"], "keywords": ["人字纹"]},
+    {"q": "可以体验竹编吗？研学课程多长时间？", "expect": "answer", "expect_sources": ["qx-bamboo-inheritor"], "keywords": ["体验"]},
+    {"q": "青溪古廊桥是什么样的？", "expect": "answer", "expect_sources": ["qx-bridge"], "keywords": ["廊桥"]},
+    {"q": "老戏台会演出什么？", "expect": "answer", "expect_sources": ["qx-stage"], "keywords": ["戏台"]},
+    {"q": "村口的古樟树有什么说法？", "expect": "answer", "expect_sources": ["qx-camphor"], "keywords": ["古樟"]},
+    {"q": "青溪贡茶是什么茶？", "expect": "answer", "expect_sources": ["qx-tea"], "keywords": ["茶"]},
+    {"q": "青溪村有哪些特色美食？", "expect": "answer", "expect_sources": ["qx-food"], "keywords": ["竹筒饭"]},
+    {"q": "竹编节是什么时候？有什么活动？", "expect": "answer", "expect_sources": ["qx-festival"], "keywords": ["竹编节"]},
+    {"q": "导览路线应该怎么走？大概要多久？", "expect": "answer", "expect_sources": ["qx-route-tip"], "keywords": ["路线"]},
+    {"q": "竹编器物应该怎么保养？", "expect": "answer", "expect_sources": ["qx-bamboo-care"], "keywords": ["保养"]},
+    {"q": "毛竹和水竹有什么区别？", "expect": "answer", "expect_sources": ["qx-bamboo-material"], "keywords": ["毛竹", "水竹"]},
+    {"q": "竹编用什么竹子做？", "expect": "answer", "expect_sources": ["qx-bamboo-material", "qx-bamboo-origin"], "keywords": ["竹"]},
+    {"q": "廊桥是什么结构？", "expect": "answer", "expect_sources": ["qx-bridge"], "keywords": ["木"]},
+    {"q": "采茶是什么季节？", "expect": "answer", "expect_sources": ["qx-tea"], "keywords": ["茶"]},
+    {"q": "竹筒饭怎么做的？", "expect": "answer", "expect_sources": ["qx-food"], "keywords": ["竹筒"]},
+    {"q": "竹编器物发霉了怎么办？", "expect": "answer", "expect_sources": ["qx-bamboo-care"], "keywords": ["霉"]},
+    {"q": "青溪村的常住人口有多少万？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "青溪村到县城的高铁什么时候通车？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "青溪村2024年的GDP是多少？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "村里竹编传承人的手机号是多少？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "青溪村的房价是多少钱一平米？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "青溪村的医院在哪里？有几个科室？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "青溪村今天天气怎么样？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "青溪村的村委会主任叫什么名字？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "量子计算的基本原理是什么？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "怎么从北京自驾到青溪村？具体路线？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "青溪村的竹编卖多少钱一个？", "expect": "refuse", "expect_sources": [], "keywords": []},
+    {"q": "青溪村有多少家民宿？分别叫什么？", "expect": "refuse", "expect_sources": [], "keywords": []}
+  ],
+  "style_cases": [
+    {"q": "介绍一下青溪竹编", "styles": ["children", "study", "normal", "en"]}
+  ]
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>县域数据分析看板（辅助模块） · 乡声</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="vendor/echarts.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">数</div>
+      <div class="brand-text">
+        <h1>县域数据分析看板</h1>
+        <p>乡声作品 · 辅助模块（原乡数智见数据可视化原型）</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span id="llmBadge" class="badge badge-off">AI增强: 未配置</span>
+      <a class="badge badge-theme" href="/">← 返回乡声 AI 导览</a>
+    </div>
+  </header>
+
+  <main>
+    <aside class="data-notice" role="note">
+      <strong>辅助模块 · 合成演示数据</strong>
+      <span>本看板是乡声作品的辅助数据分析模块，非主舞台。县名与数值均为程序生成，不代表真实地区；分析结果仅用于功能演示和方法讨论，不用于现实决策。作品主方向为「乡声 · 乡村文化 AI 导览」，见<a href="/">首页</a>。</span>
+    </aside>
+
+    <!-- 概览 -->
+    <section class="panel">
+      <h2 class="panel-title">数据概览 <small>（合成数据 · 五大振兴指标口径）</small></h2>
+      <div id="cards" class="cards"></div>
+      <div id="overviewChart" class="chart chart-md"></div>
+    </section>
+
+    <!-- 县域地图 + 综合评价指数 -->
+    <section class="panel">
+      <h2 class="panel-title">县域乡村振兴 · 一张图 <small>（演示样本内相对排序 · 示意地图着色）</small></h2>
+      <div class="map-grid">
+        <div class="map-left">
+          <div class="map-ctrl">
+            <label>着色指标
+              <select id="mapMeasure"></select>
+            </label>
+            <label>年份
+              <select id="mapYear"></select>
+            </label>
+          </div>
+          <div id="mapChart" class="chart chart-lg"></div>
+        </div>
+        <aside class="map-right">
+          <div id="radarChart" class="chart chart-md"></div>
+          <div class="rank-wrap">
+            <h3>综合指数排名 <small id="idxNote"></small></h3>
+            <ol id="rankList" class="rank-list"></ol>
+          </div>
+        </aside>
+      </div>
+      <details class="method-box">
+        <summary>算法与权重说明（可复核）</summary>
+        <p id="idxMethod" class="muted"></p>
+        <div id="weightTable" class="weight-table"></div>
+      </details>
+    </section>
+
+    <!-- 智能洞察 -->
+    <section class="panel">
+      <h2 class="panel-title">智能洞察 <small>（基于合成数据的统计摘要 · 不代表因果或现实结论）</small></h2>
+      <div id="insights" class="insight-grid"></div>
+    </section>
+
+    <section class="panel real-data-panel">
+      <div class="section-heading">
+        <div>
+          <h2 class="panel-title">真实数据 · 中国农村人口变化</h2>
+          <p class="section-note">世界银行 WDI 全国序列，与上方虚构县域样本分开呈现。来源、指标代码与计算假设均可展开核对。</p>
+        </div>
+        <a id="wbSourceLink" class="source-link" href="https://data.worldbank.org/indicator/SP.RUR.TOTL.ZS?locations=CN" target="_blank" rel="noreferrer">查看世界银行来源 ↗</a>
+      </div>
+      <div class="scenario-controls">
+        <label for="scenarioDelta">情景变化：在近期趋势上叠加年度变化</label>
+        <div class="scenario-slider-row">
+          <input id="scenarioDelta" type="range" min="-0.5" max="0.5" step="0.05" value="0">
+          <output id="scenarioDeltaLabel" for="scenarioDelta">0.00 个百分点/年</output>
+        </div>
+        <p id="scenarioResult" class="scenario-result" aria-live="polite"></p>
+      </div>
+      <div id="worldBankChart" class="chart chart-lg"></div>
+      <details class="method-box">
+        <summary>数据来源与情景算法</summary>
+        <p id="worldBankMethod" class="muted"></p>
+        <div id="worldBankSources" class="source-list"></div>
+      </details>
+    </section>
+
+    <!-- 问数 -->
+    <section class="panel">
+      <h2 class="panel-title">自然语言问数 <small>（Text-to-Chart · 用中文直接提问）</small></h2>
+      <div class="askbar">
+        <input id="q" type="text" placeholder="例如：2024年各县农村网络零售额排名 / 青溪县旅游收入预测未来3年"
+               autocomplete="off" />
+        <label class="llm-toggle" title="配置 API 后可启用大模型解析与润色；未配置时使用关键词/规则解析">
+          <input type="checkbox" id="useLlm" /> 启用AI增强
+        </label>
+        <button id="askBtn">问数</button>
+      </div>
+      <div id="examples" class="chips"></div>
+    </section>
+
+    <!-- 结果 -->
+    <section class="panel" id="resultPanel" style="display:none;">
+      <h2 class="panel-title" id="resultTitle">分析结果</h2>
+      <div class="result-grid">
+        <div id="resultChart" class="chart chart-lg"></div>
+        <aside class="result-side">
+          <div class="narrative">
+            <h3>📝 自动数据叙事</h3>
+            <p id="narrativeText"></p>
+            <details id="factsBox">
+              <summary>计算事实（数字可复核；数据为合成样本）</summary>
+              <ul id="factsList"></ul>
+            </details>
+          </div>
+          <div class="rationale">
+            <h3>🔍 解析依据 <small id="srcTag"></small></h3>
+            <ul id="rationaleList"></ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 数据目录 -->
+    <section class="panel">
+      <h2 class="panel-title">数据目录 <small>（可问数的维度与指标）</small></h2>
+      <div id="catalog" class="catalog"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>县域数据分析看板 · 乡声作品辅助模块 · 2026第十四届全国大学生数字媒体科技作品及创意竞赛</p>
+    <p class="muted">数据为合成示例数据，仅用于功能演示与评审复核；详见「数据来源说明.txt」。本服务默认仅监听本机回环地址。</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
